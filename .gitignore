@@ -2,4 +2,5 @@
 *.zip
 wandb
 data
+split_data
 *.pdf
