@@ -14,7 +14,8 @@ from sklearn.metrics import cohen_kappa_score, confusion_matrix
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
 # Initialize wandb
-wandb.init(project="transformerproje", mode="disabled")  
+# wandb.init(project="transformerproje", mode="disabled")  
+wandb.init(project="transformerproje")  
 config = wandb.config
 config.batch_size = 64
 config.image_size = (224, 224)
@@ -22,7 +23,6 @@ config.num_epochs = 1000
 config.learning_rate = 0.001
 config.patience = 5
 config.val_freq = 10
-config.patch_size = 32
 config.hidden_dim = 64
 
 
@@ -45,11 +45,7 @@ def create_dataloader(image_folder_path, batch_size=32, image_size=(224, 224)):
 
     return dataloader
 
-# load pretrained ResNet18
-if config.patch_size == 32:
-    model = models.vit_b_32(weights=models.ViT_B_32_Weights)
-elif config.patch_size == 16:
-    model = models.vit_b_16(weights=models.ViT_B_16_Weights)
+model = models.vit_b_16(weights=models.ViT_B_16_Weights)
 
 model.heads = nn.Sequential(
     nn.Linear(768, config.hidden_dim),

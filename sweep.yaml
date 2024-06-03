@@ -1,0 +1,8 @@
+program: vit32.py
+name: transformerproje
+method: grid
+parameters:
+  learning_rate:
+    values: [0.01, 0.001]
+  hidden_dim:
+    values: [64, 256, 1024]

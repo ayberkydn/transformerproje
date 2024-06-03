@@ -15,8 +15,9 @@ from sklearn.metrics import cohen_kappa_score, confusion_matrix
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
 # Initialize wandb
-wandb.init(project="transformerproje")  
+wandb.init(project="transformerproje", mode="disabled")  
 config = wandb.config
+
 config.batch_size = 64
 config.image_size = (224, 224)
 config.num_epochs = 10
@@ -45,17 +46,11 @@ def create_dataloader(image_folder_path, batch_size=32, image_size=(224, 224)):
     return dataloader
 
 # load pretrained ResNet18
-model = models.vit_b_32(weights=models.ViT_B_32_Weights)
+model = models.swin_t(weights=models.Swin_T_Weights.IMAGENET1K_V1)
 model.heads = nn.Linear(768,4)
 
 
 
-train_loader = create_dataloader('./data/dummy_set', batch_size=config.batch_size)
-val_loader = create_dataloader('./data/dummy_set', batch_size=32)
-test_loader = create_dataloader('./data/dummy_set', batch_size=32)
-model.to(device)
-criterion = nn.CrossEntropyLoss()
-optimizer = optim.Adam(model.parameters(), lr=0.001)  # You can experiment with different optimizers and learning rates
 
 
 
