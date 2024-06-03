@@ -18,7 +18,7 @@ wandb.init(project="transformerproje")
 config = wandb.config
 config.batch_size = 64
 config.image_size = (224, 224)
-config.num_epochs = 10
+config.num_epochs = 1000
 config.learning_rate = 0.001
 config.patience = 2
 config.val_freq = 10
@@ -56,9 +56,9 @@ model = torch.nn.Sequential(
     classifier
 )
 
-train_loader = create_dataloader('./data/dummy_set', batch_size=config.batch_size)
-val_loader = create_dataloader('./data/dummy_set', batch_size=32)
-test_loader = create_dataloader('./data/dummy_set', batch_size=32)
+train_loader = create_dataloader('./data/train', batch_size=config.batch_size)
+val_loader = create_dataloader('./data/val', batch_size=32)
+test_loader = create_dataloader('./data/test', batch_size=32)
 model.to(device)
 criterion = nn.CrossEntropyLoss()
 optimizer = optim.Adam(model.parameters(), lr=0.001)  # You can experiment with different optimizers and learning rates
